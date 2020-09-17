@@ -1,3 +1,8 @@
+use minigrep::{run, Config};
+
 fn main() {
-    println!("Hello, world!");
+    match Config::new() {
+        Ok(config) => run(config),
+        Err(e) => println!("{}", e),
+    }
 }
