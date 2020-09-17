@@ -30,10 +30,9 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?;
 
-    let search_function: for<'a> fn(&str, &'a str) -> Vec<&'a str> = if config.case_sensitive {
-        search
-    } else {
-        search_case_insensitive
+    let search_function: for<'a> fn(&str, &'a str) -> Vec<&'a str> = match config.case_sensitive {
+        true => search,
+        false => search_case_insensitive
     };
     
     let results = search_function(&config.query, &contents);
